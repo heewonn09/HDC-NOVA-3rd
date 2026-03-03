@@ -71,7 +71,7 @@ HDC랩스 NOVA 3rd 레포지토리입니다.
 - 🔹 AI 파이프라인 설계 및 총괄 관리  
 - 🔹 Gemini, OpenRouter 기반 챗봇 구축  
 - 🔹 Pinecone 활용 RAG 파이프라인 구축  
-- 🔹 MQTT 디바이스 제어 연동 및 앱 챗봇 UI 구현  
+- 🔹 앱 챗봇 UI 구현  
 - 🔹 서비스 GUI 및 물리 구조물 설계  
 
 ---
@@ -90,7 +90,7 @@ HDC랩스 NOVA 3rd 레포지토리입니다.
 
 ---
 
-### 천경신 | Safety & IoT
+### 천경신 | AI & IoT
 <p align="center">
   <a href="https://github.com/아이디">
     <img src="https://github-readme-stats.vercel.app/api?username=아이디&show_icons=true&theme=default" height="150"/>
@@ -99,8 +99,9 @@ HDC랩스 NOVA 3rd 레포지토리입니다.
 
 - 🔹 화재 및 가스 감지 로직 및 MQTT 통신 구축  
 - 🔹 Hugging Face 기반 음성인식 아키텍처 구현  
-- 🔹 통합 관제 대시보드 및 공지사항 웹/앱 기능 개발  
-- 🔹 웹 인터페이스 디자인 지원  
+- 🔹 통합 관제 대시보드 및 공지사항 웹/앱 기능 개발
+- 🔹 MQTT 디바이스 제어 연동
+- 🔹 웹 인터페이스 디자인
 
 ---
 
@@ -247,5 +248,6 @@ HDC랩스 NOVA 3rd 레포지토리입니다.
 * **기술 적합성**: 실시간성은 MQTT, 고성능은 Redis 등 문제 해결에 최적인 기술 스택 선정의 중요성 체감
 
 ---
+
 
 
