@@ -49,6 +49,8 @@
 
 ## 3. 🏗 시스템 아키텍처
 
+<img width="1408" height="768" alt="Gemini_Generated_Image_l9orral9orral9or" src="https://github.com/user-attachments/assets/9755075a-2b86-4f91-accc-c9afcc141ac0" />
+
 
 User Input
 ↓
@@ -59,12 +61,17 @@ Rule-Based Intent Parser (0ms ~ 5ms)
 ↓
 Response 반환
 ↓
-IoT 제어 (MQTT)
+챗봇 응답 && IoT 제어 (MQTT)
 
 
 ---
 
 ## 4. ⚙️ 핵심 설계 (Core Architecture)
+
+<img width="951" height="519" alt="image" src="https://github.com/user-attachments/assets/17f2cba7-ce92-413c-bff1-658dc5633cfa" />
+
+
+---
 
 ### 🔹 1. Rule 기반 Intent Router (LLM 우회 구조)
 
@@ -90,6 +97,8 @@ FACILITY / SPACE 조회
 LLM 호출 횟수 대폭 감소
 평균 응답속도 ~1.2s → ~80ms
 
+---
+
 ### 🔹 2. LLM 호출 최적화 구조
 ConcurrentHashMap<String, CacheEntry> llmCache;
 동일 질문 캐싱 (TTL 기반)
@@ -100,7 +109,10 @@ ConcurrentHashMap<String, CacheEntry> llmCache;
 
 LLM 호출량 60~80% 감소
 토큰 비용 약 70% 절감
-🔹 3. RAG 기반 질의응답
+
+---
+
+### 🔹 3. RAG 기반 질의응답
 
 구성:
 
@@ -118,7 +130,10 @@ LLM 응답 생성
 
 아파트 전용 지식 (공지, 규칙, FAQ)
 sourceType 기반 필터링 (GUIDE / RULE / FAQ)
-🔹 4. IoT 제어 시스템 (MQTT 기반)
+
+---
+
+### 🔹 4. IoT 제어 시스템 (MQTT 기반)
 
 핵심 흐름:
 
@@ -141,7 +156,10 @@ DeviceCommandLog 기록
 
 👉 응답 속도: 50~100ms 수준
 
-🔹 5. 대화 흐름 관리 (Session + Pending)
+---
+
+### 🔹 5. 대화 흐름 관리 (Session + Pending)
+
 ChatSession / ChatMessage 구조
 
 기능:
@@ -157,7 +175,10 @@ follow-up 질문 처리
 
 "거실"
 → 이어서 처리
-🔹 6. 대화 히스토리 최적화
+
+---
+
+### 🔹 6. 대화 히스토리 최적화
 HISTORY_LIMIT = 20;
 
 👉 이유
@@ -170,8 +191,10 @@ LLM 컨텍스트 최적화
 응답 속도 안정화
 불필요한 토큰 사용 감소
 
+---
 
-## 5. 📊 성능 개선 결과
+
+### 5. 📊 성능 개선 결과
 항목	개선 전	개선 후
 
 LLM 호출 비율	100%	20~40%
@@ -181,7 +204,9 @@ LLM 호출 비율	100%	20~40%
 토큰 비용	기준 100%	약 30%
 캐시 히트율	없음	최대 60%
 
-## 6. 🛠 트러블 슈팅
+---
+
+### 6. 🛠 트러블 슈팅
 ⚡ 문제: LLM 의존 구조
 모든 요청을 LLM 처리
 비용 증가 + 응답 지연
