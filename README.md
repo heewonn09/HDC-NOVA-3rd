@@ -49,6 +49,12 @@
 
 ### 🔍 Architecture Overview
 
+### 🎯 설계 목표
+
+- LLM 의존도 최소화
+- 실시간 IoT 제어 (100ms 이하)
+- 도메인 특화 응답 정확도 확보
+
 본 시스템은 **Rule-Based Intent Routing + RAG 구조**를 결합하여 응답 속도, 비용, 정확도를 동시에 개선했습니다.
 
 ---
