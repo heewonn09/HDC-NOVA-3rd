@@ -51,29 +51,94 @@
 
 <img width="1408" height="768" alt="Gemini_Generated_Image_l9orral9orral9or" src="https://github.com/user-attachments/assets/9755075a-2b86-4f91-accc-c9afcc141ac0" />
 
+---
 
-User Input
-↓
-Rule-Based Intent Parser (0ms ~ 5ms)
-↓
-[단순 요청] → DB / API / MQTT 처리 (No LLM)
-[복잡 질의] → RAG (Embedding → Pinecone → LLM)
-↓
-Response 반환
-↓
-챗봇 응답 && IoT 제어 (MQTT)
+### 🔍 Architecture Overview
 
+본 시스템은 **Rule-Based Intent Routing + RAG 구조**를 결합하여  
+응답 속도, 비용, 정확도를 동시에 개선한 AI 챗봇 & IoT 제어 아키텍처입니다.
 
 ---
 
-## 4. ⚙️ 핵심 설계 (Core Architecture)
-
-<img width="951" height="519" alt="image" src="https://github.com/user-attachments/assets/17f2cba7-ce92-413c-bff1-658dc5633cfa" />
-
+### ⚙️ 전체 처리 흐름
 
 ---
 
-### 🔹 1. Rule 기반 Intent Router (LLM 우회 구조)
+### 🚀 핵심 구성 요소
+
+#### 1. Intent Routing Layer
+- 사용자 입력을 **5ms 이내로 분류**
+- 요청을 단순 요청 / 복잡 질의로 분기
+- LLM 호출 여부를 사전에 결정하여 비용 최적화
+
+---
+
+#### 2. Fast Path (Non-LLM 처리)
+- 단순 명령은 LLM을 거치지 않고 처리
+
+**처리 방식**
+- DB 조회  
+- 외부 API 호출  
+- MQTT 기반 IoT 제어  
+
+**효과**
+- ⚡ 응답 속도: 수십 ms  
+- 💰 비용: 0 (LLM 미사용)
+
+---
+
+#### 3. RAG Pipeline (복잡 질의 처리)
+
+**처리 흐름**
+1. 사용자 질문 → Embedding 생성  
+2. Vector DB (Pinecone)에서 유사 문서 검색  
+3. Context + 질문 → LLM 전달  
+4. 응답 생성  
+
+**특징**
+- Hallucination 감소  
+- 도메인 기반 정확도 향상  
+
+---
+
+#### 4. Response & IoT Execution
+- 💬 챗봇 응답 반환  
+- 📡 MQTT 기반 IoT 디바이스 제어  
+
+---
+
+### ⚡ Key Design Decisions
+
+- **LLM 최소 호출 구조**
+  - 불필요한 비용 제거
+  - 응답 속도 개선
+
+- **Rule-Based + RAG Hybrid**
+  - 단순 요청 → 빠르게 처리
+  - 복잡 질의 → 정확하게 처리
+
+- **IoT 제어 분리**
+  - 챗봇 응답과 디바이스 실행을 독립적으로 처리 가능
+
+---
+
+### 📈 Performance Improvement
+
+| 항목 | 기존 (LLM Only) | 개선 구조 |
+|------|----------------|----------|
+| 응답 속도 | 약 13초 | 약 80ms |
+| 비용 | 높음 | 최소화 |
+| 안정성 | 낮음 | 높음 |
+
+---
+
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🔹 1. Rule 기반 Intent Router  
+(LLM 우회 구조)
 
 👉 전체 요청 중 **약 70~85%를 LLM 없이 처리**
 
@@ -81,23 +146,29 @@ Response 반환
 - Slot Parsing (room, device_type, action, value)  
 - 약 **30+ Intent 직접 처리**
 
+</td>
+
+<td width="50%" valign="top">
+
+### 📌 처리 가능한 주요 Intent
+
+- DEVICE_CONTROL  
+- ENV_STATUS  
+- NOTICE / COMPLAINT / RESERVATION  
+- BILL 조회  
+- FACILITY / SPACE 조회  
+- 아파트 단지 데이터 약 30개 API Intent  
 
 ---
 
-### 📌 처리 가능한 주요 Intent:
+### 👍 효과
 
-DEVICE_CONTROL
-ENV_STATUS
-NOTICE / COMPLAINT / RESERVATION
-BILL 조회
-FACILITY / SPACE 조회
+- LLM 호출 횟수 대폭 감소  
+- 평균 응답속도 **~1.2s → ~80ms**
 
-👉 효과
-
-LLM 호출 횟수 대폭 감소
-평균 응답속도 ~1.2s → ~80ms
-
----
+</td>
+</tr>
+</table>
 
 ### 🔹 2. LLM 호출 최적화 구조
 ConcurrentHashMap<String, CacheEntry> llmCache;
