@@ -53,6 +53,11 @@
 
 ---
 
+### 🗂️ ERD (Entity Relationship Diagram)
+
+<img width="723" height="593" alt="image" src="https://github.com/user-attachments/assets/53cbf262-5da3-4556-8302-312a1786c055" />
+
+
 ## 4. 🚀 핵심 기능 & 흐름(Flow)
 
 ### 🔹 1. Rule 기반 Intent Router 및 Fast Path 처리
